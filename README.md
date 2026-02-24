@@ -111,3 +111,9 @@ If you finish early or want an extra challenge, try one of these:
 - Stay curious. The unpredictability is intentional and part of the experience.
 
 When you finish, Playlist Chaos will feel more predictable, and you will have taken your first steps into AI-assisted debugging.
+
+## TF Summary
+
+Core concepts that students needed to understand for the first week tinker is how to enter into a codebase and start gaining understanding of the functionality of the different files/functions. This understanding phase can be accelerated with the use of CoPilot or any other AI tool(claude code, gemini, etc.). Another core concept is how to debug and refactor code to make the code readable and functional. Students will most likely struggle with the beginning where they need to clone the repo and have everything setup properly. I expect some students to not have their environment setup properly. Students might also struggle with learning how to debug with Copilot, especially if they rarely used Copilot or other AI tooling to debug their code.
+
+AI was helpful with understanding the code, albeit some of the explanation was still a little confusing. Students might be mislead by Copilot when  trying to debug. For example, I had an issue where the playlist stats section was displayed twice. One near the top, and the near the bottom of the page(where the Playlist stats section was supposed to be located). I asked Copilot to resolve the issue for me, and Copilot led me to check multiple different functions until finding the one that was causing the issue. Though that might have been due to me giving vague instructions to the Copilot. One way I would guide a student without giving the answer is to help them craft the prompt they are going to send to Copilot. Prompting correctly is very important to fully leveraging AI tools like Copilot.
