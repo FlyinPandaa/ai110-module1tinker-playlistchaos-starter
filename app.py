@@ -318,31 +318,35 @@ def lucky_section(playlists):
         history.append(pick)
         st.session_state.history = history
 
-
+# Refactored the stats_section to be cleaner and more readable with a better UI
 def stats_section(playlists):
     """Render statistics based on the playlists."""
     st.header("Playlist stats")
 
     stats = compute_playlist_stats(playlists)
 
+    # Song count metrics
     col1, col2, col3 = st.columns(3)
     col1.metric("Total songs", stats["total_songs"])
     col2.metric("Hype songs", stats["hype_count"])
     col3.metric("Chill songs", stats["chill_count"])
 
+    # Playlist composition and energy metrics
     col4, col5, col6 = st.columns(3)
     col4.metric("Mixed songs", stats["mixed_count"])
     col5.metric("Hype ratio", f"{stats['hype_ratio']:.2f}")
     col6.metric("Average energy", f"{stats['avg_energy']:.2f}")
 
-    top_artist = stats["top_artist"]
-    if top_artist:
-        st.write(
-            f"Most common artist: {top_artist} "
+    # Top artist info
+    st.divider()
+    if stats["top_artist"]:
+        st.info(
+            # Also included emojis and formatting to make the top artist info more visually engaging and distinct from the other metrics
+            f"🎤 Most common artist: **{stats['top_artist']}** "
             f"({stats['top_artist_count']} songs)"
         )
     else:
-        st.write("No top artist yet.")
+        st.info("🎤 No top artist yet.")
 
 
 def history_section():
@@ -392,13 +396,12 @@ def main():
     songs = st.session_state.songs
 
     base_playlists = build_playlists(songs, profile)
-    merged_playlists = merge_playlists(base_playlists, {})
 
-    playlist_tabs(merged_playlists)
+    playlist_tabs(base_playlists)
     st.divider()
-    lucky_section(merged_playlists)
+    lucky_section(base_playlists)
     st.divider()
-    stats_section(merged_playlists)
+    stats_section(base_playlists)
     st.divider()
     history_section()
 
