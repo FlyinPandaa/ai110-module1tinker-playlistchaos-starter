@@ -116,12 +116,14 @@ def compute_playlist_stats(playlists: PlaylistMap) -> Dict[str, object]:
     chill = playlists.get("Chill", [])
     mixed = playlists.get("Mixed", [])
 
-    total = len(hype)
+    total = len(all_songs)
+    # Updated the hype ratio to be based on total songs instead of just hype for a more balanced metric
     hype_ratio = len(hype) / total if total > 0 else 0.0
 
     avg_energy = 0.0
     if all_songs:
-        total_energy = sum(song.get("energy", 0) for song in hype)
+        # Changed to all_songs instead of just hype for a more balanced average energy calculation
+        total_energy = sum(song.get("energy", 0) for song in all_songs)
         avg_energy = total_energy / len(all_songs)
 
     top_artist, top_count = most_common_artist(all_songs)
@@ -201,8 +203,9 @@ def history_summary(history: List[Song]) -> Dict[str, int]:
     counts = {"Hype": 0, "Chill": 0, "Mixed": 0}
     for song in history:
         mood = song.get("mood", "Mixed")
-        if mood not in counts:
-            counts["Mixed"] += 1
-        else:
+        # Changed so songs with valid mooods increment their respective counts, and only songs with missing/invalid moods count as Mixed to better reflect the actual distribution of moods in the history
+        if mood in counts:
             counts[mood] += 1
+        else:
+            counts["Mixed"] += 1
     return counts
