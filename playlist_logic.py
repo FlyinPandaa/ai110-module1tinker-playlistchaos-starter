@@ -170,7 +170,9 @@ def search_songs(
 
     for song in songs:
         value = str(song.get(field, "")).lower()
-        if value and value in q:
+        # Fix: check whether the query is contained in the field value
+        # (was reversed: `value in q`), so partial searches like "AC" match "AC/DC".
+        if value and q in value:
             filtered.append(song)
 
     return filtered
@@ -195,6 +197,10 @@ def random_choice_or_none(songs: List[Song]) -> Optional[Song]:
     """Return a random song or None."""
     import random
 
+    # Fix: guard against an empty list so we return None instead of
+    # raising IndexError from random.choice on no songs.
+    if not songs:
+        return None
     return random.choice(songs)
 
 

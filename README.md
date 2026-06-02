@@ -112,6 +112,17 @@ If you finish early or want an extra challenge, try one of these:
 
 When you finish, Playlist Chaos will feel more predictable, and you will have taken your first steps into AI-assisted debugging.
 
+## Bugs Found & Fixed
+
+| # | Location | Bug | Fix | Status |
+|---|----------|-----|-----|--------|
+| 1 | `playlist_logic.py` → `search_songs` | Containment check was reversed (`value in q`), so partial searches like "AC" never matched "AC/DC". | Changed to `q in value` so the query is matched against the field value. | ✅ Fixed |
+| 2 | `playlist_logic.py` → `random_choice_or_none` | `random.choice()` was called with no empty-list guard, raising `IndexError` on empty playlists despite the function promising `None`. | Added an `if not songs: return None` guard. | ✅ Fixed |
+| 3 | `playlist_logic.py` → `compute_playlist_stats` | Hype ratio was computed from hype songs only, making the metric unbalanced. | Changed to `len(hype) / total` across all songs. | ✅ Fixed |
+| 4 | `playlist_logic.py` → `compute_playlist_stats` | Average energy was computed from hype songs only. | Changed to average over all songs. | ✅ Fixed |
+| 5 | `playlist_logic.py` → `history_summary` | All picks were defaulting toward "Mixed" instead of counting their actual mood. | Valid moods now increment their own count; only missing/invalid moods fall back to "Mixed". | ✅ Fixed |
+| 6 | `app.py` → `stats_section` | The playlist stats section was rendering twice (once near the top, once at the bottom). | Removed the duplicate render and refactored the section for a cleaner UI. | ✅ Fixed |
+
 ## TF Summary
 
 Core concepts that students needed to understand for the first week tinker is how to enter into a codebase and start gaining understanding of the functionality of the different files/functions. This understanding phase can be accelerated with the use of CoPilot or any other AI tool(claude code, gemini, etc.). Another core concept is how to debug and refactor code to make the code readable and functional. Students will most likely struggle with the beginning where they need to clone the repo and have everything setup properly. I expect some students to not have their environment setup properly. Students might also struggle with learning how to debug with Copilot, especially if they rarely used Copilot or other AI tooling to debug their code.
